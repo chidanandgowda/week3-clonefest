@@ -20,8 +20,8 @@ class GolfCourse {
         
         this.initializeScene();
         this.createLighting();
-        this.createCourse();
         this.createBall();
+        this.createCourse();
         this.createAimingHelpers();
     }
 
@@ -272,9 +272,8 @@ class GolfCourse {
         this.ball.castShadow = true;
         this.ball.receiveShadow = true;
         
-        // Position ball at current hole's start position
-        const currentHoleData = this.holes[this.currentHole];
-        this.ball.position.copy(currentHoleData.startPosition);
+        // Set initial position (will be updated when holes are loaded)
+        this.ball.position.set(0, 0.2, 20);
         
         this.scene.add(this.ball);
     }
@@ -311,11 +310,19 @@ class GolfCourse {
 
         this.currentHole = holeIndex;
         const holeData = this.holes[holeIndex];
+        
+        if (!holeData) {
+            console.error(`Hole data not found for index ${holeIndex}`);
+            return;
+        }
+        
         this.currentHoleGroup = holeData.group;
         this.scene.add(this.currentHoleGroup);
 
-        // Reset ball position
-        this.ball.position.copy(holeData.startPosition);
+        // Reset ball position (only if ball exists)
+        if (this.ball && holeData.startPosition) {
+            this.ball.position.copy(holeData.startPosition);
+        }
         this.ballVelocity.set(0, 0, 0);
         this.isMoving = false;
     }

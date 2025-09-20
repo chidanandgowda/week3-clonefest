@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Golf Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <div id="game-container">
+        <!-- Three.js Canvas will be inserted here -->
+        <canvas id="game-canvas"></canvas>
+        
+        <!-- Game UI -->
+        <div id="ui-overlay">
+            <!-- Game Info Panel -->
+            <div id="game-info">
+                <div class="info-item">
+                    <span class="label">Hole:</span>
+                    <span id="current-hole">1</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Par:</span>
+                    <span id="current-par">3</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Strokes:</span>
+                    <span id="stroke-count">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Total Score:</span>
+                    <span id="total-score">0</span>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div id="control-panel">
+                <div id="aiming-controls">
+                    <h3>Aiming</h3>
+                    <div class="control-group">
+                        <label for="aim-direction">Direction:</label>
+                        <input type="range" id="aim-direction" min="0" max="360" value="0" step="1">
+                        <span id="aim-value">0°</span>
+                    </div>
+                </div>
+
+                <div id="power-controls">
+                    <h3>Power</h3>
+                    <div class="control-group">
+                        <label for="shot-power">Strength:</label>
+                        <input type="range" id="shot-power" min="0" max="100" value="50" step="1">
+                        <span id="power-value">50%</span>
+                    </div>
+                    <button id="shoot-button" disabled>Shoot!</button>
+                </div>
+
+                <div id="camera-controls">
+                    <h3>Camera</h3>
+                    <button id="reset-camera">Reset View</button>
+                    <button id="follow-ball">Follow Ball</button>
+                </div>
+            </div>
+
+            <!-- Game Messages -->
+            <div id="game-messages">
+                <div id="message-display"></div>
+            </div>
+
+            <!-- Level Complete Modal -->
+            <div id="level-complete-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h2>Hole Complete!</h2>
+                    <p>Strokes: <span id="final-strokes"></span></p>
+                    <p>Par: <span id="final-par"></span></p>
+                    <p id="score-message"></p>
+                    <button id="next-level-btn">Next Hole</button>
+                    <button id="restart-level-btn">Restart Hole</button>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div id="instructions" class="collapsible">
+                <button id="instructions-toggle">Instructions ▼</button>
+                <div id="instructions-content" class="hidden">
+                    <h3>How to Play:</h3>
+                    <ul>
+                        <li><strong>Aim:</strong> Use the direction slider to aim your shot</li>
+                        <li><strong>Power:</strong> Adjust the power slider to control shot strength</li>
+                        <li><strong>Shoot:</strong> Click the "Shoot!" button when ready</li>
+                        <li><strong>Camera:</strong> Use mouse to orbit, zoom, and pan around the course</li>
+                        <li><strong>Goal:</strong> Get the ball in the hole with the fewest strokes</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Screen -->
+        <div id="loading-screen">
+            <div class="loading-content">
+                <h2>Loading Golf Course...</h2>
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Modules -->
+    <script src="js/Camera.js"></script>
+    <script src="js/GolfCourse.js"></script>
+    <script src="js/InputHandler.js"></script>
+    <script src="js/UI.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
